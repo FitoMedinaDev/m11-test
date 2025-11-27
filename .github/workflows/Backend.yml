@@ -45,3 +45,19 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/mdeis-m11-ga-ci-cd-backend:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/mdeis-m11-ga-ci-cd-backend:${{ github.sha }}
+
+      - name: Run DB seed
+        run: |
+          docker run -d --name sqlserver \
+            -e "ACCEPT_EULA=Y" \
+            -e "SA_PASSWORD=Password123!" \
+            -p 1433:1433 \
+            mcr.microsoft.com/mssql/server:2022-latest
+
+          sleep 20
+
+          docker run --rm \
+            --network host \
+            -v $PWD/database/seed.sql:/database/seed.sql \
+            mcr.microsoft.com/mssql-tools \
+            /bin/bash -c "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Password123! -i /database/seed.sql"
