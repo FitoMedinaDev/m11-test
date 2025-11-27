@@ -13,9 +13,8 @@ jobs:
     name: Build & Publish Backend
     runs-on: ubuntu-latest
 
-    if: contains(join(github.event.head_commit.modified, ','), 'SalesApp.Api/')
-      || contains(join(github.event.head_commit.added, ','), 'SalesApp.Api/')
-      || contains(join(github.event.head_commit.removed, ','), 'SalesApp.Api/')
+    if: |
+      contains(toJson(github.event.commits), 'SalesApp.Api/')
 
     steps:
       - name: Checkout
@@ -55,10 +54,8 @@ jobs:
     name: Build & Publish Frontend
     runs-on: ubuntu-latest
 
-    if:
-      contains(join(github.event.head_commit.modified, ','), 'SalesApp.Client/')
-      || contains(join(github.event.head_commit.added, ','), 'SalesApp.Client/')
-      || contains(join(github.event.head_commit.removed, ','), 'SalesApp.Client/')
+    if: |
+      contains(toJson(github.event.commits), 'SalesApp.Client/')
 
     steps:
       - name: Checkout
