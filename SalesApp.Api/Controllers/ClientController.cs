@@ -12,6 +12,7 @@ public class ClientController(IClientService clientService) : ControllerBase
     public async Task<IActionResult> Get()
     {
         var clients = await clientService.GetAllAsync();
+        System.Console.WriteLine("Retrieved clients: " + clients.Count());
         return Ok(clients);
     }
 
