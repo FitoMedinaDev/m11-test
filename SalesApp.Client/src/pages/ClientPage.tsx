@@ -51,7 +51,7 @@ export function ClientPage() {
             onClick={handleClickOpen}
             id="clientFormButton"
           >
-            Registrar cliente 3
+            Registrar cliente 4
           </Button>
         </div>
       </Stack>
