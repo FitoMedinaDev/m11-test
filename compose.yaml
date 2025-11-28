@@ -29,7 +29,7 @@ services:
     volumes:
       - ./database/seed.sql:/database/seed.sql
     depends_on:
-      sales-app.api:
+      sales-app.database:
         condition: service_started
     entrypoint: >
       bash -c '
