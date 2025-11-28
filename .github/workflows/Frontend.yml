@@ -16,6 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -31,6 +34,7 @@ jobs:
           context: SalesApp.Client
           file: SalesApp.Client/Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/mdeis-m11-ga-ci-cd-frontend:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/mdeis-m11-ga-ci-cd-frontend:${{ github.sha }}

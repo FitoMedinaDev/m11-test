@@ -12,11 +12,8 @@ services:
       - sql_data:/var/opt/mssql
 
   sales-app.api:
-    image: sales-app.api
+    image: fitomedina/mdeis-m11-ga-ci-cd-backend:latest
     container_name: sales-app.api
-    build:
-      context: .
-      dockerfile: SalesApp.Api/Dockerfile
     depends_on:
       sales-app.database:
         condition: service_started
@@ -25,7 +22,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=sales-app.database;Database=products;User=sa;Password=Password123!;TrustServerCertificate=True;Encrypt=False;
-  
+
   sales-app.seed:
     image: mcr.microsoft.com/mssql-tools
     container_name: sales-app.seed
@@ -39,18 +36,16 @@ services:
       chmod 644 database/seed.sql &&
       /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -i /database/seed.sql
       '
-  
+
   sales-app.client:
+    image: fitomedina/mdeis-m11-ga-ci-cd-frontend:latest
     container_name: sales-app.client
-    build:
-      context: SalesApp.Client
-      dockerfile: Dockerfile
-      args:
-        - VITE_API_URL=http://localhost:8080
-    ports:
-      - "3000:80"
     depends_on:
       - sales-app.api
-        
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+
 volumes:
   sql_data:
