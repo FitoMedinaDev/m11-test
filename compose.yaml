@@ -31,10 +31,13 @@ services:
     depends_on:
       sales-app.database:
         condition: service_started
-    entrypoint: >
+    entrypoint:  >
       bash -c '
-      chmod 644 database/seed.sql &&
-      /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -i /database/seed.sql
+      until /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -Q "SELECT 1" ; do
+          sleep 2 ;
+      done ;
+      chmod 644 database/seed.sql ;
+      /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -i /database/seed.sql ;
       '
 
   sales-app.client:
