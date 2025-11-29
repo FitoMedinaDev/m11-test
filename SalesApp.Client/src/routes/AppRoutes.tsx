@@ -1,16 +1,18 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import { ClientPage } from "../pages/ClientPage";
-import { Layout } from "../layouts/Layout";
-import { InvoicePage } from "../pages/InvoicePage";
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { ClientPage } from '../pages/ClientPage';
+import { Layout } from '../layouts/Layout';
+import { InvoicePage } from '../pages/InvoicePage';
+import { EmployeePage } from '../pages/EmployeePage.tsx';
 
 export function AppRoutes() {
-    return (
-        <Layout>
-            <Routes>
-                <Route path="/clients" element={<ClientPage />} />
-                <Route path="/invoices" element={<InvoicePage />} />
-                <Route path="*" element={<Navigate to="/clients" replace />} />
-            </Routes>
-        </Layout>
-    )
+  return (
+    <Layout>
+      <Routes>
+        <Route path="/clients" element={<ClientPage/>}/>
+        <Route path="/employees" element={<EmployeePage/>}/>
+        <Route path="/invoices" element={<InvoicePage/>}/>
+        <Route path="*" element={<Navigate to="/clients" replace/>}/>
+      </Routes>
+    </Layout>
+  )
 }

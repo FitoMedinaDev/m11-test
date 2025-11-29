@@ -7,11 +7,13 @@ public class DatabaseContext(DbContextOptions<DatabaseContext> options) : DbCont
 {
     public virtual DbSet<Client> Clients { get; set; }
     public virtual DbSet<DocumentType> DocumentTypes { get; set; }
+    public virtual DbSet<Employee> Employees { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DocumentType>().HasQueryFilter(dt => dt.DeletedAt == null);
-        modelBuilder.Entity<Client>().HasQueryFilter(s => s.DeletedAt == null);
+        modelBuilder.Entity<Client>().HasQueryFilter(c => c.DeletedAt == null);
+        modelBuilder.Entity<Employee>().HasQueryFilter(e => e.DeletedAt == null);
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()
                      .Where(t => t.ClrType.IsSubclassOf(typeof(BaseEntity))))

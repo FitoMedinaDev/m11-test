@@ -24,20 +24,18 @@ services:
       - ConnectionStrings__DefaultConnection=Server=sales-app.database;Database=products;User=sa;Password=Password123!;TrustServerCertificate=True;Encrypt=False;
 
   sales-app.seed:
+    restart: "no"
     image: mcr.microsoft.com/mssql-tools
     container_name: sales-app.seed
     volumes:
       - ./database/seed.sql:/database/seed.sql
     depends_on:
-      sales-app.database:
+      sales-app.api:
         condition: service_started
-    entrypoint:  >
+    entrypoint: >
       bash -c '
-      until /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -Q "SELECT 1" ; do
-          sleep 2 ;
-      done ;
-      chmod 644 database/seed.sql ;
-      /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -i /database/seed.sql ;
+      chmod 644 database/seed.sql &&
+      /opt/mssql-tools/bin/sqlcmd -S sales-app.database -U sa -P Password123! -i /database/seed.sql
       '
 
   sales-app.client:

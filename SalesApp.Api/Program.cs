@@ -22,6 +22,7 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
