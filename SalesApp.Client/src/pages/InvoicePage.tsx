@@ -51,7 +51,7 @@ export function InvoicePage() {
             onClick={handleClickOpen}
             id="invoiceFormButton"
           >
-            Registrar factura de venta
+            Regisdfsdf de venta
           </Button>
         </div>
       </Stack>
