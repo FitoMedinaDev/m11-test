@@ -51,7 +51,7 @@ export function EmployeePage() {
             onClick={handleClickOpen}
             id="employeeFormButton"
           >
-            Registrar empleado 4
+            Registrar empleado 5
           </Button>
         </div>
       </Stack>
